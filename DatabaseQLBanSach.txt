@@ -1,0 +1,60 @@
+create database QLBanSach;
+use QLBanSach;
+
+create table NhanVien (
+	ma_nhan_vien  NVARCHAR(6) PRIMARY KEY NOT NULL,
+	ten_dang_nhap NVARCHAR(50) NOT NULL,
+	mat_khau NVARCHAR(50) NOT NULL,
+	ho_ten NVARCHAR(255),
+	so_dien_thoai int,
+	dia_chi NVARCHAR(255),
+	trang_thai int
+);
+CREATE TABLE KhachHang(
+	ma_khach_hang NVARCHAR(6) PRIMARY KEY NOT NULL,
+	ten_khach_hang NVARCHAR(50) NOT NULL,
+	so_dien_thoai NVARCHAR(15) NOT NULL,
+	dia_chi NVARCHAR(255)
+);
+CREATE TABLE NhaCungCap(
+	ma_nha_cung_cap NVARCHAR(6) PRIMARY KEY NOT NULL,
+	ten_nha_cung_cap NVARCHAR(50) NOT NULL,
+	so_dien_thoai NVARCHAR(15) NOT NULL,
+	dia_chi NVARCHAR(255)
+);
+CREATE TABLE NhapHang(
+	ma_nhap_hang NVARCHAR(6) PRIMARY KEY NOT NULL,
+	ma_nha_cung_cap NVARCHAR(6) FOREIGN KEY REFERENCES NhaCungCap(ma_nha_cung_cap) NOT NULL,
+	ma_nhan_vien NVARCHAR(6) FOREIGN KEY REFERENCES NhanVien(ma_nhan_vien) NOT NULL,
+	ngay_nhap DATETIME NOT NULL,
+);
+CREATE TABLE MatHang(
+	ma_hang NVARCHAR(6) PRIMARY KEY NOT NULL,
+	ten_hang NVARCHAR(50) NOT NULL,
+	gia_ban FLOAT NULL,
+	so_luong_ban INT NULL,	
+	anh image NULL
+);
+
+CREATE TABLE ChiTietNhapHang(
+	ma_nhap_hang NVARCHAR(6) FOREIGN KEY REFERENCES NhapHang(ma_nhap_hang) NOT NULL,
+	ma_hang NVARCHAR(6) FOREIGN KEY REFERENCES MatHang(ma_hang) NOT NULL,
+	so_luong INT NOT NULL,
+	gia_nhap float
+);
+CREATE TABLE BanHang(
+	ma_ban_hang NVARCHAR(6) PRIMARY KEY NOT NULL,
+	ma_khach_hang NVARCHAR(6) FOREIGN KEY REFERENCES KhachHang(ma_khach_hang) NOT NULL,
+	ma_nhan_vien NVARCHAR(6) FOREIGN KEY REFERENCES NhanVien(ma_nhan_vien) NOT NULL,
+	ngay_ban DATETIME NOT NULL,
+);
+CREATE TABLE ChiTietBanHang(
+	ma_ban_hang NVARCHAR(6) FOREIGN KEY REFERENCES BanHang(ma_ban_hang) NOT NULL,
+	ma_hang NVARCHAR(6) FOREIGN KEY REFERENCES MatHang(ma_hang) NOT NULL,
+	so_luong INT NOT NULL ,
+	thanh_tien FLOAT NULL
+);
+
+Insert into NhanVien values('NV001','admin','1','Admin',NULL,NULL,1);
+
+
